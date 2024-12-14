@@ -1,6 +1,6 @@
 # YouTube Video and Audio Downloader
 
-This Python script enables users to download videos or extract audio from YouTube using the yt-dlp library.
+This Python script enables users to download videos or extract audio from YouTube using the yt-dlp library and a graphical user interface (GUI) built with CustomTkinter.
 
 The project provides a simple and efficient way to download YouTube content in either video (MP4) or audio (MP3) format. It utilizes the powerful yt-dlp library to handle the downloading process, ensuring high-quality downloads and format conversions.
 
@@ -8,7 +8,7 @@ Key features include:
 - Flexible download options for both video and audio
 - High-quality video downloads with merged audio and video streams
 - Audio extraction and conversion to MP3 format
-- User-friendly command-line interface for easy interaction
+- User-friendly graphical interface for easy interaction
 
 ## Repository Structure
 
@@ -21,10 +21,10 @@ The repository consists of a single Python script:
 ### Installation
 
 1. Ensure you have Python 3.6 or later installed on your system.
-2. Install the required library using pip:
+2. Install the required libraries using pip:
 
 ```bash
-pip install yt-dlp
+pip install yt-dlp customtkinter
 ```
 
 ### Getting Started
@@ -37,36 +37,35 @@ To use the YouTube downloader:
 python baixar.py
 ```
 
-2. When prompted, enter the URL of the YouTube video you want to download.
-3. Choose whether you want to download the content as 'video' or 'audio'.
+2. In the GUI window that appears:
+   - Enter the URL of the YouTube video you want to download in the "Insira o link:" field.
+   - In the "Deseja baixar como video ou audio?" field, type either "video" or "audio" to choose the download type.
+   - Click the "Confirmar" button to start the download.
+
+3. The download status will be displayed in the GUI.
 
 ### Code Example
 
-Here's how you can use the `download_video_or_audio` function in your own Python scripts:
+Here's how the `download_video_or_audio` function is used within the script:
 
 ```python
-from baixar import download_video_or_audio
+def Confirmar():
+    video_url = campo_link.get()
+    choice = campo_format.get()
+    download_video_or_audio(video_url, choice)
 
-# Download a video
-download_video_or_audio("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "video")
+def download_video_or_audio(url, download_type="video"):
+    # Function implementation...
+    pass
 
-# Download audio only
-download_video_or_audio("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "audio")
+# GUI setup and main loop
+if __name__ == "__main__":
+    # GUI initialization code...
+    botao_confirmar = ctk.CTkButton(janela, text="Confirmar", command=Confirmar)
+    botao_confirmar.pack(pady=(20, 10))
+    # More GUI code...
+    janela.mainloop()
 ```
-
-### Configuration Options
-
-The script uses default configuration options for both video and audio downloads. You can modify these options in the `download_video_or_audio` function:
-
-- For audio downloads:
-  - Format: 'bestaudio/best'
-  - Preferred codec: 'mp3'
-  - Preferred quality: '192'
-
-- For video downloads:
-  - Format: 'bestvideo+bestaudio/best'
-  - Merge output format: 'mp4'
-  - Final format: 'mp4'
 
 ### Troubleshooting
 
@@ -119,21 +118,22 @@ This will create a `download_log.txt` file in the same directory as the script.
 
 ## Data Flow
 
-The data flow in this application is straightforward:
+The data flow in this application is as follows:
 
-1. User input (YouTube URL and download type) → Script
-2. Script → yt-dlp library (with configured options)
-3. yt-dlp → YouTube servers (request content)
-4. YouTube servers → yt-dlp (stream content)
-5. yt-dlp → Local storage (save downloaded content)
-6. Script → User (display download status)
+1. User input (YouTube URL and download type) → GUI
+2. GUI → Script (when "Confirmar" button is clicked)
+3. Script → yt-dlp library (with configured options)
+4. yt-dlp → YouTube servers (request content)
+5. YouTube servers → yt-dlp (stream content)
+6. yt-dlp → Local storage (save downloaded content)
+7. Script → GUI (display download status)
 
 ```
-[User Input] → [Script] → [yt-dlp] ↔ [YouTube]
-                   ↓
-            [Local Storage]
-                   ↓
-             [Status Output]
+[User Input] → [GUI] → [Script] → [yt-dlp] ↔ [YouTube]
+                 ↑          ↓
+                 └── [Status Output]
+                            ↓
+                     [Local Storage]
 ```
 
 Note: The yt-dlp library handles the complexities of interacting with YouTube's servers, managing the download process, and performing any necessary post-processing (such as audio extraction or format conversion).
