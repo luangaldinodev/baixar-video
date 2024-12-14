@@ -7,7 +7,6 @@ def Confirmar():
     download_video_or_audio(video_url, choice)
 
 def download_video_or_audio(url, download_type="video"):
-    rotulo.configure(text="Baixando...")
     try:
         # Configurações para o download
         ydl_opts = {}
@@ -47,7 +46,7 @@ if __name__ == "__main__":
     ctk.set_default_color_theme("blue")
     janela = ctk.CTk()
     janela.title("Baixar Videos YT")
-    janela.geometry("400x500")
+    janela.geometry("400x420")
 
     rotulo_link = ctk.CTkLabel(janela, text="Insira o link:")
     rotulo_link.pack(pady=(20, 5))
@@ -62,16 +61,8 @@ if __name__ == "__main__":
     botao_confirmar = ctk.CTkButton(janela, text="Confirmar", command=Confirmar)
     botao_confirmar.pack(pady=(20, 10))
 
-    rotulo = ctk.CTkLabel(janela, text="")
-    rotulo.pack(pady=(10, 5))
-
     rotulo_concluido = ctk.CTkLabel(janela, text="")
     rotulo_concluido.pack(pady=(10, 5))
-
-    # video_url = input("Digite o URL do vídeo do YouTube: ")
-    # choice = input("Deseja baixar como 'video' ou 'audio'? ").strip().lower()
-    # download_video_or_audio(video_url, choice)
-
 
     janela.mainloop()
 
